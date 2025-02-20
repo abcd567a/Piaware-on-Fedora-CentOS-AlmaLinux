@@ -20,9 +20,11 @@ echo " "
 OS_ID=`lsb_release -si`
 OS_REL=`lsb_release -sr`
 echo -e "\e[01;32mDetected OS \e[1;95m" ${OS_ID} ${OS_REL} " \e[0;39m"
-sleep 5
+echo " "
+sleep 10
 
 echo -e "\e[01;32mUpdating repository... \e[0;39m"
+sleep 3
 dnf makecache
 
 echo -e "\e[01;32mInstalling Tools & Dependencies.... \e[0;39m"
