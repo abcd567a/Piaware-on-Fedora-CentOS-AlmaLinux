@@ -6,7 +6,7 @@ echo -e "\e[01;95mCreating Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto ho
 sleep 3
 mkdir -p ${BUILD_FOLDER}
 
-if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] || [[ `cat /etc/os-release | grep Rocky` ]]; then 
+if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] || [[ `cat /etc/os-release | grep Rocky` ]]; then
   echo -e "\e[01;32mAdding EPEL repository by installing epel-release package \e[0;39m"
   sleep 3
   dnf install epel-release -y
@@ -16,11 +16,11 @@ if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep A
 else
   dnf install lsb-release -y
 fi
-
+echo " "
 OS_ID=`lsb_release -si`
 OS_REL=`lsb_release -sr`
 echo -e "\e[01;32mDetected OS \e[1;95m" ${OS_ID} ${OS_REL} " \e[0;39m"
-sleep 3
+sleep 5
 
 echo -e "\e[01;32mUpdating repository... \e[0;39m"
 dnf makecache
