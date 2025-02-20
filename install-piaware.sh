@@ -8,7 +8,7 @@ mkdir -p ${BUILD_FOLDER}
 
 echo -e "\e[01;32mUpdating repository... \e[0;39m"
 sleep 3
-if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] ; then 
+if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] || [[ `cat /etc/os-release | grep Rocky` ]] ; then 
   echo -e "\e[01;32mAdding EPEL repository by installing epel-release package \e[0;39m"
   sleep 3
   dnf install epel-release -y
@@ -20,6 +20,9 @@ else
 fi
 
 OS_ID=`lsb_release -si`
+OS_REL=`lsb_release -sr`
+echo -e "\e[01;32mDetected OS \e[1;95m" ${OS_ID} ${OS_REL} " \e[0;39m"
+sleep 3
 
 dnf makecache
 
