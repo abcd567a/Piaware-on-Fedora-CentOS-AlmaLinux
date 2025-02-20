@@ -1,5 +1,5 @@
 ## Install dump1090-fa and piaware on Fedora, CentOS, and AlmaLinux amd64 x86_64
-**Tested on Fedora 37 and 41, CentOS 8 and 9, AlmaLinux 8 and 9** </br> 
+**Tested on Fedora 37 and 41, CentOS 9, AlmaLinux 9** </br> 
 
 ### STEP-1: INSTALL DUMP1090 
 Copy-paste following command in Terminal and press Enter Key: </br>
