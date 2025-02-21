@@ -44,10 +44,10 @@ dnf install -y lighttpd
 
 echo -e "\e[01;32mDownloading dump1090-fa Source Code from Github \e[0;39m"
 cd ${BUILD_FOLDER}
-git clone -b dev --depth 1 https://github.com/flightaware/dump1090 dump1090-fa
+git clone -b dev https://github.com/flightaware/dump1090 dump1090-fa
 cd ${BUILD_FOLDER}/dump1090-fa
-##make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
-make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
+make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
+##make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
 echo -e "\e[01;32mCopying Executeable Binary to folder `/usr/bin/` \e[0;39m"
 cp ${BUILD_FOLDER}/dump1090-fa/dump1090 /usr/bin/dump1090-fa
 cp ${BUILD_FOLDER}/dump1090-fa/view1090 /usr/bin/view1090
