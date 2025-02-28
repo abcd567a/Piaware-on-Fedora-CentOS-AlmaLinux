@@ -91,6 +91,10 @@ chmod 644 /etc/lighttpd/lighttpd.conf
 systemctl enable lighttpd
 systemctl start lighttpd
 
+#Integration if user replaces Lighttpd by Apache
+mkdir -p /etc/httpd/conf.d
+wget -O /etc/httpd/conf.d/apache.skyaware.conf https://github.com/abcd567a/Piaware-on-Fedora-CentOS-AlmaLinux/raw/master/apache.skyaware.conf
+
 echo -e "\e[01;32mConfiguring SELinux to run permissive for httpd \e[0;39m"
 echo -e "\e[01;32mThis will enable lighttpd to pull aircraft data \e[0;39m"
 echo -e "\e[01;32mfrom folder /var/run/dump1090-fa/ \e[0;39m"
