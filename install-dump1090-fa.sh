@@ -48,7 +48,7 @@ git clone -b dev https://github.com/flightaware/dump1090 dump1090-fa
 cd ${BUILD_FOLDER}/dump1090-fa
 make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
 ##make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
-echo -e "\e[01;32mCopying Executeable Binary to folder `/usr/bin/` \e[0;39m"
+echo -e "\e[01;32mCopying Executeable Binary to folder /usr/bin/ \e[0;39m"
 cp ${BUILD_FOLDER}/dump1090-fa/dump1090 /usr/bin/dump1090-fa
 cp ${BUILD_FOLDER}/dump1090-fa/view1090 /usr/bin/view1090
 
