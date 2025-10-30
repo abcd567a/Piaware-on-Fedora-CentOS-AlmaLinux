@@ -4,7 +4,11 @@ set -e
 BUILD_FOLDER=/usr/share/dump1090-builder
 echo -e "\e[01;95mCreating Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto hold source codes \e[0;39m"
 sleep 3
-mkdir -p ${BUILD_FOLDER}
+
+if [[ -d ${BUILD_FOLDER} ]]; then
+  rm -rf ${BUILD_FOLDER};
+  mkdir -p ${BUILD_FOLDER}
+fi
 
 if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] || [[ `cat /etc/os-release | grep Rocky` ]]; then
   echo -e "\e[01;32mAdding EPEL repository by installing epel-release package \e[0;39m"
@@ -21,7 +25,7 @@ OS_ID=`lsb_release -si`
 OS_REL=`lsb_release -sr`
 echo -e "\e[01;32mDetected OS \e[1;95m" ${OS_ID} ${OS_REL} " \e[0;39m"
 echo " "
-sleep 10
+sleep 5
 
 echo -e "\e[01;32mUpdating repository... \e[0;39m"
 sleep 3
@@ -44,14 +48,18 @@ dnf install -y lighttpd
 
 echo -e "\e[01;32mDownloading dump1090-fa Source Code from Github \e[0;39m"
 cd ${BUILD_FOLDER}
-## git clone -b dev https://github.com/flightaware/dump1090 dump1090-fa
-git clone https://github.com/abcd567a/dump1090.git dump1090-fa
+git clone --depth 1 https://github.com/abcd567a/dump1090.git dump1090-fa
 cd ${BUILD_FOLDER}/dump1090-fa
 make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
 ##make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
 echo -e "\e[01;32mCopying Executeable Binary to folder /usr/bin/ \e[0;39m"
-cp ${BUILD_FOLDER}/dump1090-fa/dump1090 /usr/bin/dump1090-fa
-cp ${BUILD_FOLDER}/dump1090-fa/view1090 /usr/bin/view1090
+if [[ `pgrep dump1090-fa` ]]; then
+systemctl stop dump1090-fa
+fi
+
+if [[ `pgrep view1090` ]]; then
+killall view1090;
+fi
 
 echo -e "\e[01;32mCopying necessary files from cloned source code to the computer...\e[0;39m"
 mkdir -p /etc/default
@@ -69,9 +77,12 @@ cp -r ${BUILD_FOLDER}/dump1090-fa/public_html /usr/share/skyaware/html
 
 cp ${BUILD_FOLDER}/dump1090-fa/debian/dump1090-fa.service /usr/lib/systemd/system/dump1090-fa.service
 
+if [[ ! `getent passwd dump1090` ]]; then
 echo -e "\e[01;32mAdding system user dump1090 and adding it to group rtlsdr... \e[0;39m"
 echo -e "\e[01;32mThe user dump1090 will run the dump1090-fa service \e[0;39m"
 useradd --system dump1090
+fi
+
 echo -e "\e[01;32mGroup rtlsdr was created when installing rtl-sdr, now adding the\e[0;39m"
 echo -e "\e[01;32muser dump1090 to group rtlsdr to enable it to use rtlsdr Dongle ... \e[0;39m"
 usermod -a -G rtlsdr dump1090
@@ -101,9 +112,6 @@ echo -e "\e[01;32mConfiguring SELinux to run permissive for httpd \e[0;39m"
 echo -e "\e[01;32mThis will enable lighttpd to pull aircraft data \e[0;39m"
 echo -e "\e[01;32mfrom folder /var/run/dump1090-fa/ \e[0;39m"
 echo -e "\e[39m   sudo semanage permissive -a httpd_t \e[39m"
-fi
-
-if [[ ${OS_ID} == "Fedora" ]]; then
 semanage permissive -a httpd_t;
 fi
 
