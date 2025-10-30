@@ -44,7 +44,8 @@ dnf install -y lighttpd
 
 echo -e "\e[01;32mDownloading dump1090-fa Source Code from Github \e[0;39m"
 cd ${BUILD_FOLDER}
-git clone -b dev https://github.com/flightaware/dump1090 dump1090-fa
+## git clone -b dev https://github.com/flightaware/dump1090 dump1090-fa
+git clone https://github.com/abcd567a/dump1090.git dump1090-fa
 cd ${BUILD_FOLDER}/dump1090-fa
 make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
 ##make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
