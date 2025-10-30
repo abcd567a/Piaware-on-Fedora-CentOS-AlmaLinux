@@ -10,7 +10,7 @@ fi
 echo " "
 echo -e "\e[01;95mCreating New Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto hold source codes \e[0;39m"
 mkdir -p ${BUILD_FOLDER}
-sleep 3  
+sleep 3
 if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] || [[ `cat /etc/os-release | grep Rocky` ]]; then
   echo -e "\e[01;32mAdding EPEL repository by installing epel-release package \e[0;39m"
   sleep 3
@@ -114,13 +114,12 @@ systemctl start lighttpd
 mkdir -p /etc/httpd/conf.d
 wget -O /etc/httpd/conf.d/apache.skyaware.conf https://github.com/abcd567a/Piaware-on-Fedora-CentOS-AlmaLinux/raw/master/apache.skyaware.conf
 
-if [[ ${OS_ID} == "Fedora" || ${OS_ID} == "CentOS" ]] ; then
+echo " "
 echo -e "\e[01;32mConfiguring SELinux to run permissive for httpd \e[0;39m"
 echo -e "\e[01;32mThis will enable lighttpd to pull aircraft data \e[0;39m"
 echo -e "\e[01;32mfrom folder /var/run/dump1090-fa/ \e[0;39m"
 echo -e "\e[39m   sudo semanage permissive -a httpd_t \e[39m"
 semanage permissive -a httpd_t;
-fi
 
 echo " "
 echo -e "\e[01;32mConfiguring Firewall to permit display of SkyView from LAN/internet \e[0;39m"
