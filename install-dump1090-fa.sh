@@ -34,8 +34,8 @@ dnf makecache
 echo " "
 echo -e "\e[01;32mInstalling Tools & Dependencies, if not yet installed.... \e[0;39m"
 echo -e "\e[01;32mgit, wget, make, gcc, usbutils, libusbx, libusbx-devel, ncurses-devel, rtl-sdr, rtl-sdr-devel, lighttpd \e[0;39m"
-sleep 5
 echo " "
+sleep 10
 dnf install -y git
 dnf install -y wget
 dnf install -y make
@@ -114,7 +114,7 @@ systemctl start lighttpd
 mkdir -p /etc/httpd/conf.d
 wget -O /etc/httpd/conf.d/apache.skyaware.conf https://github.com/abcd567a/Piaware-on-Fedora-CentOS-AlmaLinux/raw/master/apache.skyaware.conf
 
-if [[ ${OS_ID} == "Fedora" ]]; then
+if [[ ${OS_ID} == "Fedora" || ${OS_ID} == "Centos" ]] ; then
 echo -e "\e[01;32mConfiguring SELinux to run permissive for httpd \e[0;39m"
 echo -e "\e[01;32mThis will enable lighttpd to pull aircraft data \e[0;39m"
 echo -e "\e[01;32mfrom folder /var/run/dump1090-fa/ \e[0;39m"
