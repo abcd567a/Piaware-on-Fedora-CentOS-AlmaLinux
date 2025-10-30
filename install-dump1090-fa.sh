@@ -110,13 +110,15 @@ fi
 echo " "
 echo -e "\e[01;32mConfiguring Firewall to permit display of SkyView from LAN/internet \e[0;39m"
 echo -e "\e[39m   sudo firewall-cmd --add-service=http \e[39m"
-echo -e "\e[39m   sudo firewall-cmd --add-port=8080/tcp \e[39m"
-echo -e "\e[39m   sudo firewall-cmd --runtime-to-permanent \e[39m"
-echo -e "\e[39m   sudo firewall-cmd --reload \e[39m"
-
 firewall-cmd --add-service=http
+
+echo -e "\e[39m   sudo firewall-cmd --add-port=8080/tcp \e[39m"
 firewall-cmd --add-port=8080/tcp
+
+echo -e "\e[39m   sudo firewall-cmd --runtime-to-permanent \e[39m"
 firewall-cmd --runtime-to-permanent
+
+echo -e "\e[39m   sudo firewall-cmd --reload \e[39m"
 firewall-cmd --reload
 
 systemctl enable dump1090-fa.service
