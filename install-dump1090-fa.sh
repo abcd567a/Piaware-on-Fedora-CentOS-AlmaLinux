@@ -50,34 +50,36 @@ dnf install -y lighttpd
 
 echo -e "\e[01;32mDownloading dump1090-fa Source Code from Github \e[0;39m"
 cd ${BUILD_FOLDER}
-git clone --depth 1 https://github.com/abcd567a/dump1090.git dump1090-fa
-cd ${BUILD_FOLDER}/dump1090-fa
+git clone --depth 1 https://github.com/abcd567a/dump1090.git
+cd ${BUILD_FOLDER}/dump1090
 make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
 ##make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
 echo -e "\e[01;32mCopying Executeable Binary to folder /usr/bin/ \e[0;39m"
 if [[ `pgrep dump1090-fa` ]]; then
 systemctl stop dump1090-fa
 fi
+cp ${BUILD_FOLDER}/dump1090/dump1090 /usr/bin/dump1090-fa
 
 if [[ `pgrep view1090` ]]; then
 killall view1090;
 fi
+cp ${BUILD_FOLDER}/dump1090/view1090 /usr/bin/view1090
 
 echo -e "\e[01;32mCopying necessary files from cloned source code to the computer...\e[0;39m"
 mkdir -p /etc/default
-cp ${BUILD_FOLDER}/dump1090-fa/debian/dump1090-fa.default /etc/default/dump1090-fa
+cp ${BUILD_FOLDER}/dump1090/debian/dump1090-fa.default /etc/default/dump1090-fa
 
 mkdir -p /usr/share/dump1090-fa/
-cp ${BUILD_FOLDER}/dump1090-fa/debian/start-dump1090-fa /usr/share/dump1090-fa/start-dump1090-fa
-cp ${BUILD_FOLDER}/dump1090-fa/debian/generate-wisdom /usr/share/dump1090-fa/
-cp ${BUILD_FOLDER}/dump1090-fa/debian/upgrade-config /usr/share/dump1090-fa/
+cp ${BUILD_FOLDER}/dump1090/debian/start-dump1090-fa /usr/share/dump1090-fa/start-dump1090-fa
+cp ${BUILD_FOLDER}/dump1090/debian/generate-wisdom /usr/share/dump1090-fa/
+cp ${BUILD_FOLDER}/dump1090/debian/upgrade-config /usr/share/dump1090-fa/
 mkdir -p /usr/lib/dump1090-fa
-cp ${BUILD_FOLDER}/dump1090-fa/starch-benchmark  /usr/lib/dump1090-fa/
+cp ${BUILD_FOLDER}/dump1090/starch-benchmark  /usr/lib/dump1090-fa/
 
 mkdir -p /usr/share/skyaware/
-cp -r ${BUILD_FOLDER}/dump1090-fa/public_html /usr/share/skyaware/html
+cp -r ${BUILD_FOLDER}/dump1090/public_html /usr/share/skyaware/html
 
-cp ${BUILD_FOLDER}/dump1090-fa/debian/dump1090-fa.service /usr/lib/systemd/system/dump1090-fa.service
+cp ${BUILD_FOLDER}/dump1090/debian/dump1090-fa.service /usr/lib/systemd/system/dump1090-fa.service
 
 if [[ ! `getent passwd dump1090` ]]; then
 echo -e "\e[01;32mAdding system user dump1090 and adding it to group rtlsdr... \e[0;39m"
@@ -91,8 +93,8 @@ usermod -a -G rtlsdr dump1090
 systemctl enable dump1090-fa
 
 echo -e "\e[01;32mPerforming Lighttpd integration to display Skyaware Map ... \e[0;39m"
-cp ${BUILD_FOLDER}/dump1090-fa/debian/lighttpd/89-skyaware.conf /etc/lighttpd/conf.d/89-skyaware.conf
-cp ${BUILD_FOLDER}/dump1090-fa/debian/lighttpd/88-dump1090-fa-statcache.conf /etc/lighttpd/conf.d/88-dump1090-fa-statcache.conf
+cp ${BUILD_FOLDER}/dump1090/debian/lighttpd/89-skyaware.conf /etc/lighttpd/conf.d/89-skyaware.conf
+cp ${BUILD_FOLDER}/dump1090/debian/lighttpd/88-dump1090-fa-statcache.conf /etc/lighttpd/conf.d/88-dump1090-fa-statcache.conf
 chmod 666 /etc/lighttpd/lighttpd.conf
 if [[ ! `grep "^server.modules += ( \"mod_alias\" )" /etc/lighttpd/lighttpd.conf` ]]; then
   echo "server.modules += ( \"mod_alias\" )" >> /etc/lighttpd/lighttpd.conf
