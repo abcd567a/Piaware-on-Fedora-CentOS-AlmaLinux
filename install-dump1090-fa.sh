@@ -54,7 +54,9 @@ git clone --depth 1 https://github.com/abcd567a/dump1090.git
 cd ${BUILD_FOLDER}/dump1090
 make RTLSDR=yes DUMP1090_VERSION=$(git describe --tags | sed 's/-.*//')
 ##make RTLSDR=yes DUMP1090_VERSION=$(head -1 debian/changelog | sed 's/.*(\([^)]*\).*/\1/')
+echo " "
 echo -e "\e[01;32mCopying Executeable Binary to folder /usr/bin/ \e[0;39m"
+sleep 3
 if [[ `pgrep dump1090-fa` ]]; then
 systemctl stop dump1090-fa
 fi
@@ -66,6 +68,7 @@ fi
 cp ${BUILD_FOLDER}/dump1090/view1090 /usr/bin/view1090
 
 echo -e "\e[01;32mCopying necessary files from cloned source code to the computer...\e[0;39m"
+sleep 3
 mkdir -p /etc/default
 cp ${BUILD_FOLDER}/dump1090/debian/dump1090-fa.default /etc/default/dump1090-fa
 
