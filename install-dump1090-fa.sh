@@ -31,10 +31,11 @@ sleep 5
 echo -e "\e[01;32mUpdating repository... \e[0;39m"
 sleep 3
 dnf makecache
-
+echo " "
 echo -e "\e[01;32mInstalling Tools & Dependencies, if not yet installed.... \e[0;39m"
 echo -e "\e[01;32mgit, wget, make, gcc, usbutils, libusbx, libusbx-devel, ncurses-devel, rtl-sdr, rtl-sdr-devel, lighttpd \e[0;39m"
-sleep 3
+sleep 5
+echo " "
 dnf install -y git
 dnf install -y wget
 dnf install -y make
