@@ -2,14 +2,15 @@
 set -e
 
 BUILD_FOLDER=/usr/share/dump1090-builder
-echo -e "\e[01;95mCreating Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto hold source codes \e[0;39m"
-sleep 3
 
 if [[ -d ${BUILD_FOLDER} ]]; then
+  echo -e "\e[01;95mRemoving Old Build Folder ${BUILD_FOLDER} \e[0;39m"
   rm -rf ${BUILD_FOLDER};
-  mkdir -p ${BUILD_FOLDER}
 fi
-
+echo " "
+echo -e "\e[01;95mCreating New Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto hold source codes \e[0;39m"
+mkdir -p ${BUILD_FOLDER}
+sleep 3  
 if [[ `cat /etc/os-release | grep CentOS` ]] || [[ `cat /etc/os-release | grep AlmaLinux` ]] || [[ `cat /etc/os-release | grep Rocky` ]]; then
   echo -e "\e[01;32mAdding EPEL repository by installing epel-release package \e[0;39m"
   sleep 3
@@ -31,7 +32,9 @@ echo -e "\e[01;32mUpdating repository... \e[0;39m"
 sleep 3
 dnf makecache
 
-echo -e "\e[01;32mInstalling Tools & Dependencies.... \e[0;39m"
+echo -e "\e[01;32mInstalling Tools & Dependencies, if not yet installed.... \e[0;39m"
+echo -e "\e[01;32mgit, wget, make, gcc, usbutils, libusbx, libusbx-devel, ncurses-devel, rtl-sdr, rtl-sdr-devel, lighttpd \e[0;39m"
+sleep 3
 dnf install -y git
 dnf install -y wget
 dnf install -y make
@@ -43,8 +46,6 @@ dnf install -y ncurses-devel
 dnf install -y rtl-sdr
 dnf install -y rtl-sdr-devel
 dnf install -y lighttpd
-
-
 
 echo -e "\e[01;32mDownloading dump1090-fa Source Code from Github \e[0;39m"
 cd ${BUILD_FOLDER}
