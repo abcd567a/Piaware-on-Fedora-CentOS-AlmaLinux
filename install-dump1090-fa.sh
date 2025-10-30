@@ -96,12 +96,16 @@ systemctl start lighttpd
 mkdir -p /etc/httpd/conf.d
 wget -O /etc/httpd/conf.d/apache.skyaware.conf https://github.com/abcd567a/Piaware-on-Fedora-CentOS-AlmaLinux/raw/master/apache.skyaware.conf
 
+if [[ ${OS_ID} == "Fedora" ]]; then
 echo -e "\e[01;32mConfiguring SELinux to run permissive for httpd \e[0;39m"
 echo -e "\e[01;32mThis will enable lighttpd to pull aircraft data \e[0;39m"
 echo -e "\e[01;32mfrom folder /var/run/dump1090-fa/ \e[0;39m"
 echo -e "\e[39m   sudo semanage permissive -a httpd_t \e[39m"
+fi
 
-if [[ OS_ID == "Fedora" ]]; then semanage permissive -a httpd_t; fi
+if [[ ${OS_ID} == "Fedora" ]]; then
+semanage permissive -a httpd_t;
+fi
 
 echo " "
 echo -e "\e[01;32mConfiguring Firewall to permit display of SkyView from LAN/internet \e[0;39m"
