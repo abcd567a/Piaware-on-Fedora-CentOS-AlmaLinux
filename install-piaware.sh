@@ -121,8 +121,6 @@ git clone --depth 1 https://github.com/flightaware/piaware.git
 cd piaware
 make install
 
-adduser --system piaware
-
 ln -sf /usr/lib/piaware_packages /usr/share/tcl8.6
 ln -sf /usr/lib/fa_adept_codec /usr/share/tcl8.6
 cp ${BUILD_FOLDER}/faup1090/faup1090 /usr/lib/piaware/helpers/
@@ -131,6 +129,12 @@ install -Dm440 ${BUILD_FOLDER}/piaware/etc/piaware.sudoers /etc/sudoers.d/piawar
 touch /etc/piaware.conf
 chown piaware:piaware /etc/piaware.conf
 sudo install -d -o piaware -g piaware /var/cache/piaware
+
+if [[ ! `getent passwd piaware` ]]; then
+echo -e "\e[01;32mAdding system user piaware... \e[0;39m"
+echo -e "\e[01;32mThe user piaware will run the piaware service \e[0;39m"
+adduser --system piaware
+fi
 
 systemctl enable generate-pirehose-cert.service
 systemctl start generate-pirehose-cert.service
