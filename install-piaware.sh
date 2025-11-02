@@ -2,7 +2,12 @@
 set -e
 
 BUILD_FOLDER=/usr/share/piaware-builder
-echo -e "\e[01;95mCreating Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto hold source codes \e[0;39m"
+if [[ -d ${BUILD_FOLDER} ]]; then
+  echo -e "\e[01;95mRemoving Old Build Folder ${BUILD_FOLDER} \e[0;39m"
+  rm -rf ${BUILD_FOLDER};
+fi
+echo " "
+echo -e "\e[01;95mCreating New Build Folder\e[0;32m" ${BUILD_FOLDER} "\e[01;95mto hold source codes \e[0;39m"
 sleep 3
 mkdir -p ${BUILD_FOLDER}
 
