@@ -39,11 +39,17 @@ dnf install openssl-devel -y
 dnf install openssl-perl -y
 dnf install tcl -y
 dnf install tcl-devel -y
-dnf install tcllib -y
-dnf install tcltls -y
 dnf install tk -y
 dnf install python3-setuptools -y
 dnf install python3-devel -y
+ ##dnf install tcllib -y
+ ##dnf install tcltls -y
+
+cd ${BUILD_FOLDER}
+wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/t/tcllib-1.21-1.el9.noarch.rpm
+dnf install tcllib-1.21-1.el9.noarch.rpm
+wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/t/tcltls-1.7.22-7.el9.x86_64.rpm
+dnf install tcltls-1.7.22-7.el9.x86_64.rpm
 
 if [[ `lsb_release -si` == "Fedora" ]]; then
   dnf install python3-pyasyncore -y
@@ -87,27 +93,22 @@ ln -sf /usr/lib/Tcllauncher1.10 /usr/share/tcl8.6
 echo -e "\e[01;95mBuilding & Installing mlat-client & fa-mlat-client using Source Code from Github \e[0;39m"
 sleep 3
 cd ${BUILD_FOLDER}
-git clone https://github.com/mutability/mlat-client.git
+git clone --depth 1 https://github.com/mutability/mlat-client.git
 cd mlat-client
 ./setup.py build
 ./setup.py install
 
-##dnf install python3-wheel -y
-##dnf install python3-devel -y
-##dnf install python3-pyasyncore -y
-##python3 -m build --wheel --no-isolation
-
 echo -e "\e[01;95mBuilding & Installing faup1090 using Source Code from Github \e[0;39m"
 sleep 3
 cd ${BUILD_FOLDER}
-git clone -b dev --depth 1 https://github.com/flightaware/dump1090 faup1090
+git clone --depth 1 https://github.com/flightaware/dump1090 faup1090
 cd faup1090
 make faup1090
 
 echo -e "\e[01;95mBuilding & Installing PIAWARE using Source Code from Github \e[0;39m"
 sleep 3
 cd ${BUILD_FOLDER}
-git clone https://github.com/flightaware/piaware.git
+git clone --depth 1 https://github.com/flightaware/piaware.git
 cd piaware
 make install
 
