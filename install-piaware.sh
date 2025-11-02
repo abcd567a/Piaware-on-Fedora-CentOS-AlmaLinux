@@ -46,7 +46,12 @@ dnf install python3-devel -y
 if [[ `lsb_release -si` == "Fedora" ]]; then
   dnf install tcllib -y
   dnf install tcltls -y
+  dnf install itcl -y
+  dnf install tclx -y
+  dnf install python3-pyasyncore -y
 else
+  echo -e "\e[01;32mDownloading & Installing .rpm packages \e[0;39m"
+  echo -e "\e[01;32mtcllib, tcltls, python3-pyasyncore\e[0;39m"
   cd ${BUILD_FOLDER}
   wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/t/tcllib-1.21-1.el9.noarch.rpm
   dnf install tcllib-1.21-1.el9.noarch.rpm -y
@@ -54,13 +59,7 @@ else
   dnf install tcltls-1.7.22-7.el9.x86_64.rpm -y
   wget https://dl.fedoraproject.org/pub/epel/10/Everything/x86_64/Packages/p/python3-pyasyncore-1.0.4-1.el10_1.noarch.rpm
   sudo dnf install python3-pyasyncore-1.0.4-1.el10_1.noarch.rpm -y
-fi
 
-if [[ `lsb_release -si` == "Fedora" ]]; then
-  dnf install python3-pyasyncore -y
-  dnf install itcl -y
-  dnf install tclx -y
-else
   echo -e "\e[01;32mBuilding & Installing tclx using Source Code from Github \e[0;39m"
   sleep 3
   cd ${BUILD_FOLDER}
