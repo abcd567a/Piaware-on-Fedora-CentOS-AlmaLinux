@@ -49,9 +49,11 @@ if [[ `lsb_release -si` == "Fedora" ]]; then
 else
   cd ${BUILD_FOLDER}
   wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/t/tcllib-1.21-1.el9.noarch.rpm
-  dnf install tcllib-1.21-1.el9.noarch.rpm
+  dnf install tcllib-1.21-1.el9.noarch.rpm -y
   wget https://dl.fedoraproject.org/pub/epel/9/Everything/x86_64/Packages/t/tcltls-1.7.22-7.el9.x86_64.rpm
-  dnf install tcltls-1.7.22-7.el9.x86_64.rpm
+  dnf install tcltls-1.7.22-7.el9.x86_64.rpm -y
+  wget https://dl.fedoraproject.org/pub/epel/10/Everything/x86_64/Packages/p/python3-pyasyncore-1.0.4-1.el10_1.noarch.rpm
+  sudo dnf install python3-pyasyncore-1.0.4-1.el10_1.noarch.rpm -y
 fi
 
 if [[ `lsb_release -si` == "Fedora" ]]; then
