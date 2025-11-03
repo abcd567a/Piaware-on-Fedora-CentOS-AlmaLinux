@@ -53,6 +53,8 @@ if [[ `lsb_release -si` == "Fedora" ]]; then
   dnf install tcltls -y
   dnf install itcl -y
   dnf install python3-pyasyncore -y
+  dnf install tclx -y
+  ln -sf /usr/lib64/tcl8.6/tclx8.4 /usr/share/tcl8.6
 else
   echo -e "\e[01;32mDownloading & Installing .rpm packages \e[0;39m"
   echo -e "\e[01;32mtcllib, tcltls, python3-pyasyncore\e[0;39m"
@@ -75,17 +77,17 @@ else
   ln -sf itclWidget/tclconfig tclconfig
   make install
   ln -sf /usr/lib/itcl* /usr/share/tcl8.6
-fi
 
-echo -e "\e[01;32mBuilding & Installing tclx using Source Code from Github \e[0;39m"
-sleep 3
-cd ${BUILD_FOLDER}
-git clone https://github.com/flightaware/tclx.git
-cd tclx
-./configure
-make
-make install
-ln -sf /usr/lib/tclx8.6 /usr/share/tcl8.6
+  echo -e "\e[01;32mBuilding & Installing tclx using Source Code from Github \e[0;39m"
+  sleep 3
+  cd ${BUILD_FOLDER}
+  git clone https://github.com/flightaware/tclx.git
+  cd tclx
+  ./configure
+  make
+  make install
+  ln -sf /usr/lib/tclx8.6 /usr/share/tcl8.6
+fi
 
 echo -e "\e[01;32mBuilding & Installing tcllauncher using Source Code from Github \e[0;39m"
 sleep 3
