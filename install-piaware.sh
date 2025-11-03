@@ -116,6 +116,12 @@ make faup1090
 
 echo -e "\e[01;95mBuilding & Installing PIAWARE using Source Code from Github \e[0;39m"
 sleep 3
+if [[ ! `getent passwd piaware` ]]; then
+echo -e "\e[01;32mAdding system user piaware... \e[0;39m"
+echo -e "\e[01;32mThe user piaware will run the piaware service \e[0;39m"
+adduser --system piaware
+fi
+
 cd ${BUILD_FOLDER}
 git clone --depth 1 https://github.com/flightaware/piaware.git
 cd piaware
@@ -129,12 +135,6 @@ install -Dm440 ${BUILD_FOLDER}/piaware/etc/piaware.sudoers /etc/sudoers.d/piawar
 touch /etc/piaware.conf
 chown piaware:piaware /etc/piaware.conf
 sudo install -d -o piaware -g piaware /var/cache/piaware
-
-if [[ ! `getent passwd piaware` ]]; then
-echo -e "\e[01;32mAdding system user piaware... \e[0;39m"
-echo -e "\e[01;32mThe user piaware will run the piaware service \e[0;39m"
-adduser --system piaware
-fi
 
 systemctl enable generate-pirehose-cert.service
 systemctl start generate-pirehose-cert.service
