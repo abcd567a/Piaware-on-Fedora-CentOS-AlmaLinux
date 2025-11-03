@@ -110,7 +110,7 @@ cd mlat-client
 echo -e "\e[01;95mBuilding & Installing faup1090 using Source Code from Github \e[0;39m"
 sleep 3
 cd ${BUILD_FOLDER}
-git clone --depth 1 https://github.com/flightaware/dump1090 faup1090
+git clone --depth 1 https://github.com/abcd567a/dump1090 faup1090
 cd faup1090
 make faup1090
 
