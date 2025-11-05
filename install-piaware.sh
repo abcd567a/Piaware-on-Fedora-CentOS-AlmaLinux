@@ -54,7 +54,7 @@ if [[ `lsb_release -si` == "Fedora" ]]; then
   dnf install itcl -y
   dnf install python3-pyasyncore -y
   dnf install tclx -y
-  ln -sf /usr/lib64/tcl8.6/tclx8.4 /usr/share/tcl8.6
+  ##ln -sf /usr/lib64/tcl8.6/tclx8.4 /usr/share/tcl8.6
 else
   echo -e "\e[01;32mDownloading & Installing .rpm packages \e[0;39m"
   echo -e "\e[01;32mtcllib, tcltls, python3-pyasyncore\e[0;39m"
